@@ -9,7 +9,7 @@ def edgar_api_path(path)
   "https://data.sec.gov/#{path}"
 end
 
-def call_edgar_url(url) # config, url
+def call_edgar_url(url)
   HTTP.headers('Accept' => '*/*',
                'Connection' => 'keep-alive').get(url)
 end
@@ -20,7 +20,7 @@ edgar_response = {}
 edgar_results = {}
 
 ## HAPPY submission request
-submission_url = edgar_api_path("submissions/CIK0000320193.json")
+submission_url = edgar_api_path('submissions/CIK0000320193.json')
 edgar_response[submission_url] = call_edgar_url(submission_url)
 submission = edgar_response[submission_url].parse
 
@@ -35,18 +35,6 @@ edgar_results['name'] = submission['name']
 
 edgar_results['tickers'] = submission['tickers']
 # should be a list ["AAPL"]
-
-### second layer data ###
-# contributors_url = submission['contributors_url']
-# edgar_response[contributors_url] = call_edgar_url()
-# contributors = edgar_response[contributors_url].parse
-
-# edgar_results['contributors'] = contributors
-# contributors.count
-# # should be 3 contributors array
-
-# contributors.map { |c| c['login'] }
-# # should be ["Yuan-Yu", "SOA-KunLin", "luyimin"]
 
 ## BAD submission request
 bad_submission_url = edgar_api_path('submissions/CIK0000000000.json')
