@@ -4,12 +4,12 @@ require 'sequel'
 
 Sequel.migration do
   change do
-    create_table(:submissions_firms) do
-      primary_key %i[submission_id firm_id]
-      foreign_key :submission_id, :submissions
+    create_table(:filings_firms) do
+      primary_key %i[filing_id firm_id]
+      foreign_key :filing_id, :filings
       foreign_key :firm_id, :firms
 
-      index %i[submission_id firm_id]
+      index %i[filing_id firm_id]
     end
   end
 end

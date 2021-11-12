@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require_relative 'submission_mapper'
+require_relative 'filing_mapper'
 
 module SECond
   module Edgar
@@ -24,7 +24,7 @@ module SECond
       class DataMapper
         def initialize(data, gateway_class)
           @data = data
-          @submission_mapper = SubmissionMapper.new(gateway_class)
+          @filing_mapper = FilingMapper.new(gateway_class)
         end
 
         def build_entity
@@ -60,7 +60,7 @@ module SECond
         end
 
         def filings
-          @submission_mapper.load_several(@data['cik'])
+          @filing_mapper.load_several(@data['cik'])
         end
       end
     end

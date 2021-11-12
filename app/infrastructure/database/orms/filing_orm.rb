@@ -6,7 +6,7 @@ module SECond
   # Database for SECond
   module Database
     # Object Relational Mapper for Submission Entities
-    class SubmissionOrm < Sequel::Model(:submissions)
+    class FilingOrm < Sequel::Model(:filings)
       many_to_one :firm,
                   class: :'SECond::Database::FirmOrm'
 
@@ -17,8 +17,8 @@ module SECond
 
       plugin :timestamps, update_on_create: true
 
-      def self.find_or_create(submission_info)
-        first(accession_number: submission_info[:accession_number]) || create(submission_info)
+      def self.find_or_create(filing_info)
+        first(accession_number: filing_info[:accession_number]) || create(filing_info)
       end
     end
   end

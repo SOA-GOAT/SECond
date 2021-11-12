@@ -4,7 +4,7 @@ require 'sequel'
 
 Sequel.migration do
   change do
-    create_table(:submissions) do
+    create_table(:filings) do
       primary_key :id
       foreign_key :firm_id, :firms
 

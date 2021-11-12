@@ -7,7 +7,7 @@ module SECond
     # Object-Relational Mapper for Firms
     class FirmOrm < Sequel::Model(:firms)
       one_to_many :filings,
-                  class: :'SECond::Database::SubmissionOrm',
+                  class: :'SECond::Database::FilingOrm',
                   key: :firm_id
 
       # many_to_many :contributed_projects,

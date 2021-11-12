@@ -3,7 +3,7 @@
 require 'dry-types'
 require 'dry-struct'
 
-require_relative 'submission'
+require_relative 'filing'
 
 module SECond
   module Entity
@@ -17,7 +17,7 @@ module SECond
       attribute :sic_description,   Strict::String
       attribute :name,              Strict::String
       attribute :tickers,           Strict::String
-      attribute :filings,           Strict::Array.of(Submission)
+      attribute :filings,           Strict::Array.of(Filing)
 
       def to_attr_hash
         to_hash.reject { |key, _| %i[id filings].include? key }

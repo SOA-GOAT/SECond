@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'firms'
-require_relative 'submissions'
+require_relative 'filings'
 
 module SECond
   module Repository
@@ -9,7 +9,7 @@ module SECond
     module For
       ENTITY_REPOSITORY = {
         Entity::Firm => Firms,
-        Entity::Submission => Submissions
+        Entity::Filing => Filings
       }.freeze
 
       def self.klass(entity_klass)

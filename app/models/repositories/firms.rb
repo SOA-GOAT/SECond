@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'submissions'
+require_relative 'filings'
 
 module SECond
   module Repository
@@ -48,7 +48,7 @@ module SECond
         Entity::Firm.new(
           db_record.to_hash.merge(
             # firm: Submissions.rebuild_entity(db_record.firm),
-            filings: Submissions.rebuild_many(db_record.filings)
+            filings: Filings.rebuild_many(db_record.filings)
           )
         )
       end
@@ -70,7 +70,7 @@ module SECond
             # db_firm.update(submission: submission)
 
             @entity.filings.each do |filing|
-              db_firm.add_filing(Submissions.db_find_or_create(filing))
+              db_firm.add_filing(Filings.db_find_or_create(filing))
             end
           end
         end

@@ -3,20 +3,20 @@
 module SECond
   module Edgar
     # Data Mapper: Edgar Submission -> Submission entity
-    class SubmissionMapper
+    class FilingMapper
       def initialize(gateway_class = Edgar::EdgarApi)
         @gateway_class = gateway_class
         @gateway = @gateway_class.new
       end
 
       def load_several(cik)
-        submission_hash = @gateway.submission_data(cik)
-        keys = submission_hash.keys
-        size = submission_hash['accessionNumber'].size
+        filing_hash = @gateway.submission_data(cik)
+        keys = filing_hash.keys
+        size = filing_hash['accessionNumber'].size
         (0..size - 1).map do |index|
           data = {}
-          keys.each { |key| data[key] = submission_hash[key][index] }
-          SubmissionMapper.build_entity(data, cik)
+          keys.each { |key| data[key] = filing_hash[key][index] }
+          FilingMapper.build_entity(data, cik)
         end
       end
 
@@ -32,7 +32,7 @@ module SECond
         end
 
         def build_entity
-          Entity::Submission.new(
+          Entity::Filing.new(
             id: nil,
             cik: cik,
             accession_number: accession_number,

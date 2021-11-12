@@ -3,19 +3,19 @@
 module SECond
   module Repository
     # Repository for Submissions
-    class Submissions
+    class Filings
       def self.find_id(id)
-        rebuild_entity Database::SubmissionOrm.first(id: id)
+        rebuild_entity Database::FilingOrm.first(id: id)
       end
 
       def self.find_accession_number(accession_number)
-        rebuild_entity Database::SubmissionOrm.first(accession_number: accession_number)
+        rebuild_entity Database::FilingOrm.first(accession_number: accession_number)
       end
 
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        Entity::Submission.new(
+        Entity::Filing.new(
           id: db_record.id,
           cik: db_record.cik,
           accession_number: db_record.accession_number,
@@ -27,13 +27,13 @@ module SECond
       end
 
       def self.rebuild_many(db_records)
-        db_records.map do |db_submission|
-          Submissions.rebuild_entity(db_submission)
+        db_records.map do |db_filing|
+          Filings.rebuild_entity(db_filing)
         end
       end
 
       def self.db_find_or_create(entity)
-        Database::SubmissionOrm.find_or_create(entity.to_attr_hash)
+        Database::FilingOrm.find_or_create(entity.to_attr_hash)
       end
     end
   end
