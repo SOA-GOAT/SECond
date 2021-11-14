@@ -63,16 +63,16 @@ module SECond
             # firm_filings = edgar_firm.filings.select { |filing| filing.form_type.include? "10-K"}
             # firm_filings.each do |filing|
             # api.download_submission_url(firm_cik, filing.accession_number)
-            firm_filings = FirmFiling.new(edgar_firm)
-            firm_filings.download! unless firm_filings.exists_locally?
+            #firm_filings = FirmFiling.new(edgar_firm)
+            #firm_filings.download! unless firm_filings.exists_locally?
             # end
 
             # Compile readability for firm specified by cik
-            firm_rdb = Mapper::Readability
-              .new.for_firm(firm_cik)
+            #firm_rdb = Mapper::Readability
+            #  .new.for_firm(firm_cik)
 
             # Show viewer the firm
-            view 'firm', locals: { firm: edgar_firm, firm_rdb: firm_rdb }
+            view 'firm', locals: { firm: edgar_firm }
           end
         end
       end
