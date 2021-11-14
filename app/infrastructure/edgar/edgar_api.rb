@@ -60,7 +60,9 @@ module SECond
         def get(url)
           http_response =
             HTTP.headers('Accept' => '*/*',
-                         'Connection' => 'keep-alive').get(url)
+                         'Connection' => 'keep-alive')
+                .via("#{ENV['PROXY_IP']}", 3128, "#{ENV['PROXY_USER']}", "#{ENV['PROXY_PASSWD']}")
+                .get(url)
 
           Response.new(http_response).tap do |response|
             raise(response.error) unless response.successful?
