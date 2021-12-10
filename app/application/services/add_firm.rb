@@ -9,8 +9,8 @@ module SECond
       include Dry::Transaction
 
       step :format_cik
-      step :find_firm
-      step :store_firm
+      step :request_firm
+      step :reify_firm
 
       private
 
@@ -23,40 +23,22 @@ module SECond
         end
       end
 
-      def find_firm(input)
-        if (firm = firm_in_database(input))
-          input[:local_firm] = firm
-        else
-          input[:remote_firm] = firm_from_edgar(input)
-        end
-        Success(input)
-      rescue StandardError => err
-        Failure(err.to_s)
+      def request_firm(input)
+        result = Gateway::Api.new(SECond::App.config)
+          .add_firm(input[:firm_cik])
+
+        result.success? ? Success(result.payload) : Failure(result.message)
+      rescue StandardError => e
+        puts e.inspect + '\n' + e.backtrace
+        Failure('Cannot add firms right now; please try again later')
       end
 
-      def store_firm(input)
-        firm =
-          if (new_firm = input[:remote_firm])
-            Repository::For.entity(new_firm).create(new_firm)
-          else
-            input[:local_firm]
-          end
-        Success(firm)
-      rescue StandardError => err
-        puts err.backtrace.join("\n")
-        Failure('Having trouble accessing the database')
-      end
-
-      # following are support methods that other services could use
-
-      def firm_from_edgar(input)
-        Edgar::FirmMapper.new.find(input[:firm_cik])
+      def reify_firm(firm_json)
+        Representer::Firm.new(OpenStruct.new)
+          .from_json(firm_json)
+          .then { |firm| Success(firm) }
       rescue StandardError
-        raise 'Could not find that firm on Edgar'
-      end
-
-      def firm_in_database(input)
-        Repository::For.klass(Entity::Firm).find_cik(input[:firm_cik])
+        Failure('Error in the firm -- please try again')
       end
     end
   end
