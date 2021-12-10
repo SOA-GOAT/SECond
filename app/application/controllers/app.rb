@@ -3,10 +3,13 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
+require_relative 'helpers'
 
 module SECond
   # Web App
   class App < Roda
+    include RouteHelpers
+    plugin :caching
     plugin :halt
     plugin :flash
     plugin :all_verbs # recognizes HTTP verbs beyond GET/POST (e.g., DELETE)
@@ -84,6 +87,7 @@ module SECond
             firm = Views::Firm.new(inspected[:firm])
             firm_rdb = Views::FirmReadability.new(inspected[:firm_rdb])
             # Show viewer the firm
+            response.expires 60, public: true
             view 'firm', locals: { firm: firm, firm_rdb: firm_rdb }
           end
         end
