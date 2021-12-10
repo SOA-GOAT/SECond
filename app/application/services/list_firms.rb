@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'dry/monads'
+require 'dry/transaction'
 
 module SECond
   module Service
     # Retrieves array of all listed firm entities
     class ListFirms
-      include Dry::Monads::Result::Mixin
+      include Dry::Transaction
 
       step :get_api_list
       step :reify_list

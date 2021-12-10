@@ -6,7 +6,7 @@ require_relative 'pages/home_page'
 describe 'Homepage Acceptance Tests' do
   include PageObject::PageFactory
   before do
-    DatabaseHelper.wipe_database
+    #DatabaseHelper.wipe_database
 
     # Delete `headless: true` if non-headless mode is preferred
     @browser = Watir::Browser.new :chrome, headless: true
