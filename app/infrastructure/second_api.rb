@@ -43,12 +43,12 @@ module SECond
         end
 
         def firms_list(list)
-          call_api('get', ['firms'],
+          call_api('get', ['firm'],
                    'list' => Value::WatchedList.to_encoded(list))
         end
 
         def add_firm(firm_cik)
-          call_api('post', ['firms', firm_cik])
+          call_api('post', ['firm', firm_cik])
         end
 
         # def get_inspection(req)

@@ -5,7 +5,7 @@ require_relative '../../../helpers/spec_helper.rb'
 describe 'Integration test of AddFirm service and API gateway' do
   it 'must add a legitimate firm' do
     # WHEN we request to add a firm
-    url_request = SECond::Forms::NewFirm.new.call(firm_CIK: CIK)
+    url_request = SECond::Forms::NewFirm.new.call(firm_cik: CIK)
 
     res = SECond::Service::AddFirm.new.call(url_request)
 

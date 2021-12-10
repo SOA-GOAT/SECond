@@ -26,7 +26,6 @@ module SECond
       def request_firm(input)
         result = Gateway::Api.new(SECond::App.config)
           .add_firm(input[:firm_cik])
-
         result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError => e
         puts e.inspect + '\n' + e.backtrace
