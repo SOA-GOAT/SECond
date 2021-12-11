@@ -51,4 +51,8 @@ Style/ExplicitBlockArgument:
     - app/presentation/view_objects/firms_list.rb
     - app/presentation/view_objects/filing_list.rb
 
-
+Style/StringConcatenation:
+  Enabled: true
+  Exclude:
+    - app/infrastructure/second_api.rb
+    - app/application/services/add_firm.rb

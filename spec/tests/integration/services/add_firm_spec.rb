@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../helpers/spec_helper.rb'
+require_relative '../../../helpers/spec_helper'
 
 describe 'Integration test of AddFirm service and API gateway' do
   it 'must add a legitimate firm' do

@@ -4,7 +4,6 @@ module SECond
   module RouteHelpers
     # Application value for the path of a requested firm
     class FirmRequestPath
-
       def initialize(cik, request)
         @firm_cik = cik
         @request = request
@@ -12,8 +11,6 @@ module SECond
       end
 
       attr_reader :firm_cik
-
     end
   end
 end
-

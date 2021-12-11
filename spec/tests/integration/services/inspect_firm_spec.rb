@@ -1,6 +1,6 @@
-# # frozen_string_literal: true
+# frozen_string_literal: true
 
-# require_relative '../../../helpers/spec_helper.rb'
+# require_relative '../../../helpers/spec_helper'
 
 # describe 'Integration test of AddFirm service and API gateway' do
 #   it 'must get the appraisal of an existing firm' do
