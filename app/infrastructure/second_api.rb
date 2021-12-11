@@ -77,7 +77,7 @@ module SECond
       class Response < SimpleDelegator
         NotFound = Class.new(StandardError)
 
-        SUCCESS_CODES = (200..299).freeze
+        SUCCESS_CODES = (200..299) # .freeze
 
         def success?
           code.between?(SUCCESS_CODES.first, SUCCESS_CODES.last)
