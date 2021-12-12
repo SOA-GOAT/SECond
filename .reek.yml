@@ -8,12 +8,33 @@
         - SECond::Edgar::EdgarApi#download_submission_url
         - SECond::Edgar::EdgarApi#submission_data
         - SECond::Service::AddFirm#store_firm
+        - SECond::Gateway::Api::Request#call_api
+        - SECond::Service::AddFirm#request_firm
     UtilityFunction:
       enabled: false
     MissingSafeMethod:
       exclude:
         - SECond::FirmFiling
         - SECond::Submission::LocalFirmSubmissions
+    Attribute:
+      exclude:
+        - SECond::Representer::OpenStructWithLinks#links
+    FeatureEnvy:
+      exclude:
+        - SECond::Service::ListFirms#validate_list
+        - SECond::Service::InspectFirm#calculate_readability
+        - SECond::Service::AddFirm#format_cik
+    UncommunicativeVariableName:
+      exclude:
+        - SECond::Service::AddFirm#find_firm
+        - SECond::Service::AddFirm#store_firm
+        - SECond::Service::AddFirm#request_firm
+    RepeatedConditional:
+      exclude:
+        - SECond::App
+    DuplicateMethodCall:
+      exclude:
+        - SECond::Gateway::Api::Request#initialize
 
   exclude_paths:
     - _snippets
