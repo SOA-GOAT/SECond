@@ -56,3 +56,7 @@ Style/StringConcatenation:
   Exclude:
     - app/infrastructure/second_api.rb
     - app/application/services/add_firm.rb
+
+Style/OpenStructUse:
+  Enabled: false
+
