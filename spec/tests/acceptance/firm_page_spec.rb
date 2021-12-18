@@ -8,15 +8,13 @@ describe 'Firm Page Acceptance Tests' do
   include PageObject::PageFactory
 
   before do
-    DatabaseHelper.wipe_database
-    # Headless error? https://github.com/leonid-shevtsov/headless/issues/80
-    # @headless = Headless.new
-    @browser = Watir::Browser.new
+    # DatabaseHelper.wipe_database
+    # Delete `headless: true` if non-headless mode is preferred
+    @browser = Watir::Browser.new :chrome, headless: true
   end
 
   after do
     @browser.close
-    # @headless.destroy
   end
 
   it '(HAPPY) should see firm content if firm exists' do

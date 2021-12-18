@@ -4,18 +4,17 @@ require 'dry/transaction'
 
 module SECond
   module Service
-    # Analyzes contributions to a project
+    # Analyzes contributions to a firm
     class InspectFirm
       include Dry::Transaction
 
-      step :ensure_watched_firm
-      step :retrieve_remote_firm
-      step :download_remote
-      step :calculate_readability
+      step :validate_firm
+      step :retrieve_firm_readability
+      step :reify_readability
 
       private
 
-      def ensure_watched_firm(input)
+      def validate_firm(input)
         if input[:watched_list].include? input[:requested]
           Success(input)
         else
@@ -23,30 +22,25 @@ module SECond
         end
       end
 
-      def retrieve_remote_firm(input)
-        input[:firm] = Repository::For.klass(Entity::Firm).find_cik(input[:requested])
+      def retrieve_firm_readability(input)
+        input[:response] = Gateway::Api.new(SECond::App.config)
+          .inspect(input[:requested])
 
-        input[:firm] ? Success(input) : Failure('Firm not found')
+        input[:response].success? ? Success(input) : Failure(input[:response].message)
       rescue StandardError
-        Failure('Having trouble accessing the database')
+        Failure('Cannot inspect firms right now; please try again later')
       end
 
-      def download_remote(input)
-        firm_filings = FirmFiling.new(input[:firm])
-        firm_filings.download! unless firm_filings.exists_locally?
+      def reify_readability(input)
+        unless input[:response].processing?
+          Representer::FirmReadability.new(OpenStruct.new)
+            .from_json(input[:response].payload)
+            .then { input[:inspected] = _1 }
+        end
 
-        Success(input.merge(firm_filings: firm_filings))
-      rescue StandardError
-        puts error.backtrace.join("\n")
-        Failure('Could not download this firms filings')
-      end
-
-      def calculate_readability(input)
-        input[:firm_rdb] = Mapper::Readability
-          .new.for_firm(input[:requested])
         Success(input)
       rescue StandardError
-        Failure('Could not find that firm readability')
+        Failure('Error in our inspect report -- please try again')
       end
     end
   end

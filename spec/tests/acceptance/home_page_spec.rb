@@ -6,25 +6,14 @@ require_relative 'pages/home_page'
 describe 'Homepage Acceptance Tests' do
   include PageObject::PageFactory
   before do
-    DatabaseHelper.wipe_database
-    # Headless error? https://github.com/leonid-shevtsov/headless/issues/80
-    # @headless = Headless.new
-    @browser = Watir::Browser.new
+    # DatabaseHelper.wipe_database
 
-    # options = Selenium::WebDriver::Chrome::Options.new
-    # options.add_argument('--headless')
-    # options.add_argument('--no-sandbox')
-    # options.add_argument('--disable-gpu')
-    # options.add_argument('--disable-dev-shm-usage')
-    # options.add_argument('--profile-directory=Default')
-    # options.add_argument('--user-data-dir=~/.config/google-chrome')
-
-    # @browser = Watir::Browser.new :chrome, options => options
+    # Delete `headless: true` if non-headless mode is preferred
+    @browser = Watir::Browser.new :chrome, headless: true
   end
 
   after do
     @browser.close
-    # @headless.destroy
   end
 
   describe 'Visit Home page' do

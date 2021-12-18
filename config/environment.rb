@@ -2,11 +2,10 @@
 
 require 'figaro'
 require 'roda'
-require 'sequel'
 require 'delegate' # needed until Rack 2.3 fixes delegateclass bug
 
 module SECond
-  # Configuration for the App
+  # Environment-specific configuration
   class App < Roda
     plugin :environments
 
@@ -21,18 +20,7 @@ module SECond
     use Rack::Session::Cookie, secret: config.SESSION_SECRET
 
     configure :development, :test, :app_test do
-      ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
+      require 'pry'; # for breakpoints
     end
-
-    configure :app_test do
-      require_relative '../spec/helpers/vcr_helper'
-      VcrHelper.setup_vcr
-      VcrHelper.configure_vcr_for_edgar(recording: :none)
-    end
-
-    # Database Setup
-    DB = Sequel.connect(ENV['DATABASE_URL'])
-    # This method smells of :reek:UncommunicativeMethodName
-    def self.DB() = DB # rubocop:disable Naming/MethodName
   end
 end
