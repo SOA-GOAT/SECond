@@ -24,6 +24,8 @@
         - SECond::Service::ListFirms#validate_list
         - SECond::Service::InspectFirm#calculate_readability
         - SECond::Service::AddFirm#format_cik
+        - SECond::Service::InspectFirm#reify_readability
+        - SECond::Service::InspectFirm#retrieve_firm_readability
     UncommunicativeVariableName:
       exclude:
         - SECond::Service::AddFirm#find_firm
@@ -35,6 +37,8 @@
     DuplicateMethodCall:
       exclude:
         - SECond::Gateway::Api::Request#initialize
+        - SECond::Service::InspectFirm#reify_readability
+        - SECond::Service::InspectFirm#retrieve_firm_readability
 
   exclude_paths:
     - _snippets

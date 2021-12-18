@@ -31,7 +31,7 @@ module SECond
         Failure('Cannot inspect firms right now; please try again later')
       end
 
-      def reify_readabilityl(input)
+      def reify_readability(input)
         unless input[:response].processing?
           Representer::FirmReadability.new(OpenStruct.new)
             .from_json(input[:response].payload)

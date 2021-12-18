@@ -83,7 +83,6 @@ module SECond
               routing.redirect '/'
             end
 
-      
             inspection = OpenStruct.new(result.value!)
             if inspection.response.processing?
               flash[:notice] = 'Firm filings are being downloaded and analyzed, '\
