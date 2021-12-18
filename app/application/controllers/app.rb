@@ -9,12 +9,12 @@ module SECond
   # Web App
   class App < Roda
     include RouteHelpers
-    plugin :caching
+
     plugin :halt
     plugin :flash
-    plugin :all_verbs # recognizes HTTP verbs beyond GET/POST (e.g., DELETE)
+    plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
+    plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :public, root: 'app/presentation/public'
     plugin :assets, path: 'app/presentation/assets',
                     css: 'style.css' # , js: 'table_row.js'
 
@@ -83,10 +83,16 @@ module SECond
               routing.redirect '/'
             end
 
-            inspected = result.value!
-            firm = Views::Firm.new(inspected[:firm])
+            inspection = OpenStruct.new(result.value!)
+            if inspection.response.processing?
+              flash[:notice] = 'Firm filings are being downloaded and analyzed, '\
+                               'please check back in a moment.'
+              routing.redirect '/'
+            end
+
+            inspected = inspection.inspected
             firm_rdb = Views::FirmReadability.new(inspected[:firm_rdb])
-            # Show viewer the firm
+
             response.expires 60, public: true
             view 'firm', locals: { firm: firm, firm_rdb: firm_rdb }
           end
