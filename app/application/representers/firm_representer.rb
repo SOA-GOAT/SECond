@@ -23,7 +23,7 @@ module SECond
       collection :filings, extend: Representer::Filing, class: OpenStruct
 
       link :self do
-        "#{App.config.API_HOST}/api/v1/firm/#{firm_cik}"
+        "/api/v1/firm/#{firm_cik}"
       end
 
       private

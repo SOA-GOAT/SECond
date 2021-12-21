@@ -85,16 +85,18 @@ module SECond
 
             inspection = OpenStruct.new(result.value!)
             if inspection.response.processing?
-              flash[:notice] = 'Firm filings are being downloaded and analyzed, '\
-                               'please check back in a moment.'
-              routing.redirect '/'
+              flash.now[:notice] = 'The firm is being inspected'
+            else
+              inspected = inspection.inspected
+              proj_folder = Views::FirmReadability
+                .new(inspected[:firm_rdb])
+              response.expires(60, public: true) if App.environment == :production
             end
-
-            inspected = inspection.inspected
-            firm_rdb = Views::FirmReadability.new(inspected[:firm_rdb])
-
-            response.expires 60, public: true
-            view 'firm', locals: { firm: firm, firm_rdb: firm_rdb }
+            processing = Views::InspectionProcessing.new(
+              App.config, inspection.response
+            )
+            # Show viewer the project
+            view 'firm', locals: { firm: firm, firm_rdb: firm_rdb, processing: processing }
           end
         end
       end
