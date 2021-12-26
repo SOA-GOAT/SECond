@@ -88,8 +88,8 @@ module SECond
               flash.now[:notice] = 'The firm is being inspected'
             else
               inspected = inspection.inspected
-              proj_folder = Views::FirmReadability
-                .new(inspected[:firm_rdb])
+              firm_rdb = Views::FirmReadability
+                .new(inspected[:firm_rdb]) # proj_folder
               response.expires(60, public: true) if App.environment == :production
             end
             processing = Views::InspectionProcessing.new(
