@@ -25,9 +25,9 @@ module SECond
       def retrieve_firm_readability(input)
         input[:response] = Gateway::Api.new(SECond::App.config)
           .inspect(input[:requested])
-
         input[:response].success? ? Success(input) : Failure(input[:response].message)
-      rescue StandardError
+      rescue StandardError => error
+        puts error
         Failure('Cannot inspect firms right now; please try again later')
       end
 

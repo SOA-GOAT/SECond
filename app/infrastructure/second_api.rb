@@ -52,7 +52,7 @@ module SECond
         end
 
         def get_inspection(req)
-          call_api('get', ['firm', req.firm_cik])
+          call_api('get', ['firm', req])
         end
 
         private

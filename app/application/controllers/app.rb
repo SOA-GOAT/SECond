@@ -51,7 +51,6 @@ module SECond
             firm_made = Service::AddFirm.new.call(cik_request)
 
             if firm_made.failure?
-              puts "nightmare QQ"
               flash[:error] = firm_made.failure
               routing.redirect '/'
             end
@@ -94,9 +93,13 @@ module SECond
                 .new(inspected[:firm_rdb]) # proj_folder
               response.expires(60, public: true) if App.environment == :production
             end
+
             processing = Views::InspectionProcessing.new(
               App.config, inspection.response
             )
+            firm_list = SECond::Service::ListFirms.new.call([firm_cik]).value!.firms
+            puts firm_list
+            firm = firm_list.first
             # Show viewer the project
             view 'firm', locals: { firm: firm, firm_rdb: firm_rdb, processing: processing }
           end
