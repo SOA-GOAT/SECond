@@ -34,9 +34,9 @@ module SECond
           flash[:error] = result.failure
           viewable_firms = []
         else
-          firms = result.value!
+          firms = result.value!.firms
           flash.now[:notice] = 'Add a firm cik to get started' if firms.none?
-          session[:watching] = firms.map(&:formatted_cik)
+          session[:watching] = firms.map(&:cik) # formatted_
           viewable_firms = Views::FirmsList.new(firms)
         end
 
@@ -56,9 +56,10 @@ module SECond
             end
 
             firm = firm_made.value!
+            puts firm_made
             session[:watching].insert(0, firm.cik).uniq!
             flash[:notice] = 'Firm added to your list'
-            routing.redirect "firm/#{firm.formatted_cik}"
+            routing.redirect "firm/#{firm.cik}" # formatted_
           end
         end
 
