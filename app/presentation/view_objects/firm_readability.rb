@@ -12,8 +12,8 @@ module Views
       @firmrdb
     end
 
-    def aver_firm_readability
-      @firmrdb.aver_firm_readability
+    def aver_firm_rdb
+      @firmrdb.aver_firm_rdb
     end
 
     def sentences

@@ -12,7 +12,8 @@ module SECond
     class FirmReadability < Roar::Decorator
       include Roar::JSON
 
-      property :firm_rdb, extend: Representer::FilingReadability, class: OpenStruct
+      collection :filings_rdb, extend: Representer::FilingReadability, class: OpenStruct
+      property :aver_firm_rdb
     end
   end
 end

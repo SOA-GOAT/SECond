@@ -90,7 +90,7 @@ module SECond
             else
               inspected = inspection.inspected
               firm_rdb = Views::FirmReadability
-                .new(inspected[:firm_rdb]) # proj_folder
+                .new(inspected) # proj_folder
               response.expires(60, public: true) if App.environment == :production
             end
 

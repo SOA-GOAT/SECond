@@ -45,28 +45,34 @@
       tbody
         tr
           th
-            span Firm:
+            span Firm
           td
             span
               = firm.name
         tr
           th
-            span SIC:
+            span SIC
           td
             span
               = firm.sic
         tr
           th
-            span SIC Description:
+            span SIC Description
           td 
             span 
               = firm.sic_description
         tr
           th
-            span Tickers:
+            span Tickers
           td
             - firm.tickers.split.each do |ticker|
               = ticker
+        tr
+          th
+            span Average Readability Score
+          td 
+            span 
+              = firm_rdb.aver_firm_rdb
   .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
     table.table id="filings-table"
       thead
@@ -90,6 +96,8 @@
             /   span #{firm_rdb.aver_firm_readability}
             td.filing.value
               span #{filing.size}
+            /td.filing.value
+              /span #{filing.rdb_score}
             / - filing.keys.each do |key|
             /   td
             /     span #{filing[key]}
