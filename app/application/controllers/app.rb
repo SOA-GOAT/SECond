@@ -51,6 +51,7 @@ module SECond
             firm_made = Service::AddFirm.new.call(cik_request)
 
             if firm_made.failure?
+              puts "nightmare QQ"
               flash[:error] = firm_made.failure
               routing.redirect '/'
             end
