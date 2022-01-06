@@ -39,10 +39,6 @@ h4{
   font-weight: bold
 }
 
-.firm.name {
-  
-}
-
 .hcenter {
   text-align: center;
 }
@@ -82,4 +78,8 @@ footer {
   padding: 0.5in;
   font-size:11px;
   color:rgb(100, 100, 100);
+}
+
+.rdb-trend {
+  position: relative;
 }
