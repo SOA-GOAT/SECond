@@ -72,7 +72,7 @@
             span Average Readability Score
           td 
             span 
-              = firm_rdb.aver_firm_rdb
+              = firm.aver_firm_rdb
   .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
     table.table id="filings-table"
       thead
@@ -81,8 +81,9 @@
         th.filing.att Filing Date
         th.filing.att Reporting Date
         th.filing.att Size
+        th.filing.att Readability
       tbody
-        - firm.filings.each do |filing, index|
+        - filing_list.each do |filing, index|
           tr
             td.filing.value
               span #{filing.accession_number}
@@ -96,8 +97,8 @@
             /   span #{firm_rdb.aver_firm_readability}
             td.filing.value
               span #{filing.size}
-            /td.filing.value
-              /span #{filing.rdb_score}
+            td.filing.value
+              span #{filing.rdb_score}
             / - filing.keys.each do |key|
             /   td
             /     span #{filing[key]}

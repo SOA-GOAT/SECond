@@ -23,5 +23,9 @@ module Views
     def size
       @firmrdb.size
     end
+
+    def filings_rdb
+      @firmrdb.filings_rdb
+    end
   end
 end

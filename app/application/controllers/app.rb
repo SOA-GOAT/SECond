@@ -89,19 +89,22 @@ module SECond
               flash.now[:notice] = 'The firm is being inspected'
             else
               inspected = inspection.inspected
-              firm_rdb = Views::FirmReadability
-                .new(inspected) # proj_folder
+
+              firm_list = SECond::Service::ListFirms.new.call([firm_cik]).value!.firms
+              firm = firm_list.first
+
+              filing_list = Views::FilingsList.new(firm.filings, inspected)
+              firm = Views::Firm.new(firm, inspected)
+
               response.expires(60, public: true) if App.environment == :production
             end
 
             processing = Views::InspectionProcessing.new(
               App.config, inspection.response
             )
-            firm_list = SECond::Service::ListFirms.new.call([firm_cik]).value!.firms
-            puts firm_list
-            firm = firm_list.first
+
             # Show viewer the project
-            view 'firm', locals: { firm: firm, firm_rdb: firm_rdb, processing: processing }
+            view 'firm', locals: { firm: firm, filing_list: filing_list, processing: processing }
           end
         end
       end

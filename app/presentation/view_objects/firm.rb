@@ -3,8 +3,9 @@
 module Views
   # View for a single project entity
   class Firm
-    def initialize(firm, index = nil)
+    def initialize(firm, firm_rdb, index = nil)
       @firm = firm
+      @firm_rdb = firm_rdb
       @index = index
     end
 
@@ -40,8 +41,8 @@ module Views
       @firm.tickers
     end
 
-    def filings
-      @firm.filings
+    def aver_firm_rdb
+      @firm_rdb.aver_firm_rdb
     end
   end
 end

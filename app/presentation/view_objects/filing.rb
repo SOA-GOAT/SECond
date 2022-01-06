@@ -2,9 +2,10 @@
 
 module Views
   # View for a single filing entity
-  class Filling
-    def initialize(filing, index = nil)
+  class Filing
+    def initialize(filing, filing_rdb, index = nil)
       @filing = filing
+      @filing_rdb = filing_rdb
       @index = index
     end
 
@@ -42,6 +43,10 @@ module Views
 
     def size
       @filing.size
+    end
+
+    def rdb_score
+      @filing_rdb.filing_rdb
     end
   end
 end
