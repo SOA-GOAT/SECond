@@ -20,5 +20,11 @@ module Views
     def any?
       @filings.any?
     end
+
+    def map
+      @filings.map do |filing|
+        yield filing
+      end
+    end
   end
 end

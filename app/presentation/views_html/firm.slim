@@ -39,7 +39,7 @@
     h2 id="firm-fullname"
       span.edgar.firm 
         = firm.name
-  .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
+  .container.d-flex.justify-content-between.bg-light.rounded.top-buffer
     table.table id="firm-table"
       thead
       tbody
@@ -73,6 +73,38 @@
           td 
             span 
               = firm.aver_firm_rdb
+
+      
+
+    
+    ruby: 
+      require 'json'
+      filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+      filingdate = filingdate.reverse.to_json
+
+      rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+      rdbscore = rdbscore.reverse.to_json
+
+    canvas#myChart[width="30%" height="10%"]
+    javascript:
+      const ctx = document.getElementById('myChart');
+      const labels = #{filingdate};
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Readability Trend',
+          data: #{rdbscore},
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+          }]
+      };
+      const config = {
+        type: 'line',
+        data: data,
+      };
+      const myChart = new Chart(ctx, config)
+
   .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
     table.table id="filings-table"
       thead
@@ -89,7 +121,7 @@
               span #{filing.accession_number}
             td.filing.value
               span #{filing.form_type}
-            td.filing.value
+            td.filing.value id="filing-date"
               span #{filing.filing_date}
             td.filing.value
               span #{filing.reporting_date}
@@ -97,7 +129,7 @@
             /   span #{firm_rdb.aver_firm_readability}
             td.filing.value
               span #{filing.size}
-            td.filing.value
+            td.filing.value id="rdb_score"
               span #{filing.rdb_score}
             / - filing.keys.each do |key|
             /   td
