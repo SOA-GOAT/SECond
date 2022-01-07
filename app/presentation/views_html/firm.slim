@@ -85,9 +85,9 @@
         rdbscore = rdbscore.reverse.to_json
 
       .rdb-trend
-        canvas#myChart[]
+        canvas#rdb_trend[]
         javascript:
-          const ctx = document.getElementById('myChart');
+          const ctx = document.getElementById('rdb_trend');
           const labels = #{filingdate};
           const data = {
             labels: labels,

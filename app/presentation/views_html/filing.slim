@@ -43,7 +43,43 @@
     h5 id="accession-number"
       span.edgar.firm 
         = "Accession Number: #{filing.accession_number}"
+  .row.d-flex.justify-content-left
+    a.btn.btn-success href="#{filing.document_path}" target="_blank"
+      = "Click to see full document!"
 
-.container.top-buffer
-  iframe height="600" src="#{filing.document_path}" width="100%" 
+  .container
+    ruby: 
+        require 'json'
+        rdbscore = filing.rdb_score
+        averfirmrdb = firm.aver_firm_rdb
+        difrdb = averfirmrdb - rdbscore
+
+    canvas#rdb_gauge[]
+    javascript:
+      var ctx = document.getElementById("rdb_gauge");
+      var myChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Readability"],
+          datasets: [
+            {
+              label: ["# of Votes"],
+              data: [#{rdbscore}, #{difrdb}],
+              backgroundColor: ["rgb(255, 205, 86)", 'rgba(255, 255, 255, 0.85)'],
+              borderColor: ["rgba(255, 205, 86, 0.75)"],
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          circumference: 180,
+          rotation:-90,
+          cutoutPercentage: 64,
+        }
+      });
+
+
+/ .container.top-buffer
+/   iframe height="600" src="#{filing.document_path}" width="100%" 
    / is="x-frame-bypass"
