@@ -13,6 +13,7 @@ module SECond
 
       # property :sentences
       property :filing_rdb # aver_firm_readability
+      property :sentiment_score
     end
   end
 end

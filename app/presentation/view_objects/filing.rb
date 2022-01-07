@@ -48,6 +48,10 @@ module Views
     def rdb_score
       @filing_rdb.filing_rdb
     end
+    
+    def sentiment_score
+      @filing_rdb.sentiment_score
+    end
 
     def document_path
       accession_number = @filing.accession_number.tr('-', '')
