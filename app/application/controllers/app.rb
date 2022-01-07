@@ -63,6 +63,48 @@ module SECond
           end
         end
 
+        routing.on String, String do |firm_cik, accession_number|
+          # GET /firm/{firm_cik}/{accession_number}
+          puts "we got here"
+          routing.get do
+            session[:watching] ||= []
+
+            result = Service::InspectFirm.new.call(
+              watched_list: session[:watching],
+              requested: firm_cik
+            )
+
+            if result.failure?
+              flash[:error] = result.failure
+              routing.redirect '/'
+            end
+
+            inspection = OpenStruct.new(result.value!)
+            if inspection.response.processing?
+              flash.now[:notice] = 'The filing is being inspected'
+            else
+              inspected = inspection.inspected
+
+              firm_list = SECond::Service::ListFirms.new.call([firm_cik]).value!.firms
+              firm = firm_list.first
+
+              filing_list = Views::FilingsList.new(firm.filings, inspected)
+              firm = Views::Firm.new(firm, inspected)
+              
+              filing = filing_list.filter{ |filing| filing.accession_number == accession_number}.first
+
+              response.expires(60, public: true) if App.environment == :production
+            end
+
+            processing = Views::InspectionProcessing.new(
+              App.config, inspection.response
+            )
+
+            # Show viewer the project
+            view 'filing', locals: { firm: firm, filing: filing, processing: processing }
+          end
+        end
+
         routing.on String do |firm_cik|
           # DELETE /firm/{firm_cik}
           routing.delete do
@@ -107,6 +149,8 @@ module SECond
             view 'firm', locals: { firm: firm, filing_list: filing_list, processing: processing }
           end
         end
+
+
       end
     end
   end

@@ -26,5 +26,11 @@ module Views
         yield filing
       end
     end
+
+    def filter
+      @filings.filter do |filing|
+        yield filing
+      end
+    end
   end
 end

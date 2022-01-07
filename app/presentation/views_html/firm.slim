@@ -116,32 +116,28 @@
           };
           const myChart = new Chart(ctx, config)
 
-  .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
+  .container.d-flex.flex-column.bg-light.rounded.top-buffer
     table.table id="filings-table"
       thead
         th.filing.att Accession Number
         th.filing.att Form Type
         th.filing.att Filing Date
-        th.filing.att Reporting Date
+        th.filing.att Primary Document
         th.filing.att Size
         th.filing.att Readability
       tbody
         - filing_list.each do |filing, index|
           tr
             td.filing.value
-              span #{filing.accession_number}
+              a href="/firm/#{firm.cik}/#{filing.accession_number}"
+                span #{filing.accession_number}
             td.filing.value
               span #{filing.form_type}
             td.filing.value id="filing-date"
               span #{filing.filing_date}
             td.filing.value
-              span #{filing.reporting_date}
-            / td.filing.value
-            /   span #{firm_rdb.aver_firm_readability}
+              span #{filing.primary_document}
             td.filing.value
               span #{filing.size}
             td.filing.value id="rdb_score"
               span #{filing.rdb_score}
-            / - filing.keys.each do |key|
-            /   td
-            /     span #{filing[key]}
