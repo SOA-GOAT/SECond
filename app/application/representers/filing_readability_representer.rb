@@ -11,7 +11,6 @@ module SECond
     class FilingReadability < Roar::Decorator
       include Roar::JSON
 
-      # property :sentences
       property :filing_rdb # aver_firm_readability
       property :sentiment_score
     end
