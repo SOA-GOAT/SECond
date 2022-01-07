@@ -149,8 +149,6 @@ module SECond
             view 'firm', locals: { firm: firm, filing_list: filing_list, processing: processing }
           end
         end
-
-
       end
     end
   end

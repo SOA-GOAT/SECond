@@ -48,5 +48,12 @@ module Views
     def rdb_score
       @filing_rdb.filing_rdb
     end
+
+    def document_path
+      accession_number = @filing.accession_number.tr('-', '')
+      cik = @filing.cik.to_i.to_s
+      path = "https://www.sec.gov/Archives/edgar/data"
+      "#{path}/#{cik}/#{accession_number}/#{@filing.primary_document}"
+    end
   end
 end
