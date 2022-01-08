@@ -5,8 +5,8 @@ require_relative 'filing'
 module Views
   # View for a a list of filing entities
   class FilingsList
-    def initialize(filings, firm_rdb)
-      filings_textual_attribute = firm_rdb.filings_textual_attribute
+    def initialize(filings, firm_textual_attribute)
+      filings_textual_attribute = firm_textual_attribute.filings_textual_attribute
       @filings = filings.map.with_index { |filing, index| Filing.new(filing, filings_textual_attribute[index], index) }
       
     end

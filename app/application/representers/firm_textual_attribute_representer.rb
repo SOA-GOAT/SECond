@@ -14,6 +14,7 @@ module SECond
 
       collection :filings_textual_attribute, extend: Representer::FilingTextualAttribute, class: OpenStruct
       property :aver_firm_rdb
+      property :aver_firm_sentiment
     end
   end
 end

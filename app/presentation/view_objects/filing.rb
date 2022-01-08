@@ -3,9 +3,9 @@
 module Views
   # View for a single filing entity
   class Filing
-    def initialize(filing, filing_rdb, index = nil)
+    def initialize(filing, filing_textual_attribute, index = nil)
       @filing = filing
-      @filing_rdb = filing_rdb
+      @filing_textual_attribute = filing_textual_attribute
       @index = index
     end
 
@@ -46,11 +46,11 @@ module Views
     end
 
     def rdb_score
-      @filing_rdb.filing_rdb
+      @filing_textual_attribute.filing_rdb
     end
     
     def sentiment_score
-      @filing_rdb.sentiment_score
+      @filing_textual_attribute.sentiment_score
     end
 
     def document_path
