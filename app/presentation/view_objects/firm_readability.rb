@@ -2,7 +2,7 @@
 
 module Views
   # View for a single firm entity
-  class FirmReadability
+  class FirmTextualAttribute
     def initialize(firmrdb, index = nil)
       @firmrdb = firmrdb
       @index = index
@@ -24,8 +24,8 @@ module Views
       @firmrdb.size
     end
 
-    def filings_rdb
-      @firmrdb.filings_rdb
+    def filings_textual_attribute
+      @firmrdb.filings_textual_attribute
     end
   end
 end

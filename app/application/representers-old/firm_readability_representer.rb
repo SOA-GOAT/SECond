@@ -9,10 +9,10 @@ require_relative 'filing_readability_representer'
 module SECond
   module Representer
     # Represents sentence info about firm's filing
-    class FirmReadability < Roar::Decorator
+    class FirmTextualAttribute < Roar::Decorator
       include Roar::JSON
 
-      collection :filings_rdb, extend: Representer::FilingReadability, class: OpenStruct
+      collection :filings_textual_attribute, extend: Representer::FilingTextualAttribute, class: OpenStruct
       property :aver_firm_rdb
     end
   end

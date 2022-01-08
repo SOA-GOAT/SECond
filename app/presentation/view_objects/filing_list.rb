@@ -6,8 +6,8 @@ module Views
   # View for a a list of filing entities
   class FilingsList
     def initialize(filings, firm_rdb)
-      filings_rdb = firm_rdb.filings_rdb
-      @filings = filings.map.with_index { |filing, index| Filing.new(filing, filings_rdb[index], index) }
+      filings_textual_attribute = firm_rdb.filings_textual_attribute
+      @filings = filings.map.with_index { |filing, index| Filing.new(filing, filings_textual_attribute[index], index) }
       
     end
 

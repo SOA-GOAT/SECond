@@ -33,7 +33,7 @@ module SECond
 
       def reify_readability(input)
         unless input[:response].processing?
-          Representer::FirmReadability.new(OpenStruct.new)
+          Representer::FirmTextualAttribute.new(OpenStruct.new)
             .from_json(input[:response].payload)
             .then { input[:inspected] = _1 }
         end

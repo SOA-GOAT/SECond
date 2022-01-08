@@ -3,13 +3,16 @@
 require 'roar/decorator'
 require 'roar/json'
 
+require_relative 'sentence_readability_representer'
+
 module SECond
   module Representer
     # Represents sentence info about firm's filing
-    class SentenceReadability < Roar::Decorator
+    class FilingTextualAttribute < Roar::Decorator
       include Roar::JSON
 
-      property :sentence
+      property :filing_rdb # aver_firm_readability
+      property :sentiment_score
     end
   end
 end

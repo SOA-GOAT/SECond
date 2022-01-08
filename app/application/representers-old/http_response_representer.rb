@@ -20,6 +20,7 @@ module SECond
         ok: 200,
         created: 201,
         processing: 202,
+        no_content: 204,
 
         forbidden: 403,
         not_found: 404,
