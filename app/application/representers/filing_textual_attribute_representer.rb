@@ -14,6 +14,7 @@ module SECond
       # property :sentences
       property :filing_rdb # aver_firm_readability
       property :sentiment_score # filing's sentiment score
+      property :word_frequency
     end
   end
 end

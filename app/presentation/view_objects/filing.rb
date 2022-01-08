@@ -45,6 +45,10 @@ module Views
       @filing.size
     end
 
+    def word_frequency
+      @filing_textual_attribute.word_frequency
+    end
+
     def rdb_score
       @filing_textual_attribute.filing_rdb
     end

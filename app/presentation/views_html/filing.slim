@@ -49,10 +49,9 @@
 
   .container
     ruby: 
-        require 'json'
-        rdbscore = filing.rdb_score
-        averfirmrdb = firm.aver_firm_rdb
-        difrdb = averfirmrdb - rdbscore
+      rdbscore = filing.rdb_score
+      averfirmrdb = firm.aver_firm_rdb
+      difrdb = averfirmrdb - rdbscore
 
     canvas#rdb_gauge[]
     javascript:
@@ -79,7 +78,17 @@
         }
       });
 
+  .container.top-buffer.word-cloud
+    ruby:
+      require 'json'
+      words = filing.word_frequency.to_json
 
+    canvas#word_cloud[height="600" width="1000"]
+    javascript:
+      var words = #{words}
+      console.log(words)
+      WordCloud(document.getElementById("word_cloud"), { list: words, backgroundColor: 'rgb(252, 186, 3, 0.2)'} );
+      
 / .container.top-buffer
 /   iframe height="600" src="#{filing.document_path}" width="100%" 
    / is="x-frame-bypass"
