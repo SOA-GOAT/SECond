@@ -6,7 +6,7 @@ require 'roar/json'
 module SECond
   module Representer
     # Represents sentence info about firm's filing
-    class SentenceReadability < Roar::Decorator
+    class SentenceTextualAttribute < Roar::Decorator
       include Roar::JSON
 
       property :sentence

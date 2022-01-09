@@ -14,7 +14,7 @@ h4{
  }
 
 .container.custom-container-width {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .text-underline-hover {
@@ -37,10 +37,6 @@ h4{
 
 .firm.owner {
   font-weight: bold
-}
-
-.firm.name {
-  
 }
 
 .hcenter {
@@ -82,4 +78,20 @@ footer {
   padding: 0.5in;
   font-size:11px;
   color:rgb(100, 100, 100);
+}
+
+.graph {
+  position: relative;
+}
+
+.word-cloud {
+  min-width: 100%; 
+}
+
+.half {
+  width: 50%;
+}
+
+.full-graph {
+
 }

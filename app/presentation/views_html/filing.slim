@@ -1,0 +1,135 @@
+.container.top-buffer
+- if processing.in_progress?
+  .progress
+  .progress-bar.bg-success.progress-bar-striped.active[
+    role="progressbar" aria-valuenow="10" aria-valuemin="0"
+    aria-valuemax="100" style="width:0%"]
+  script src = "#{processing.ws_javascript}"
+  javascript:
+    var channel = "#{processing.ws_channel_id}";
+    var client = new Faye.Client("#{processing.ws_route}");
+    var bar = document.getElementsByClassName("progress-bar")[0];
+    var reg = /\:(\d+)%/
+    client.subscribe('/' + channel, function(message) {
+      // Collect progressbar element and percentage
+      var progress = bar.getAttribute("style")
+      var currentProgress = reg.exec(progress)[1]
+      
+      if (isNaN(message)) {
+        bar.setAttribute("style", "width:100%")
+        bar.setAttribute("class", "progress-bar bg-danger progress-bar-striped")
+        bar.innerHTML = message
+      } else {
+        if (parseInt(message) > parseInt(currentProgress)) {
+          // Set the progress bar and percentage
+          bar.setAttribute("aria-valuenow", message)
+          bar.setAttribute("style", "width:"+message+"%")
+          bar.innerHTML = message+"%"
+          // Reload page at 100%
+          if (message == "100") {
+            setTimeout(function () {
+              window.location = window.location.href
+            }, 1000);
+          }
+        }
+      }
+    });
+-  else
+  .row.d-flex.justify-content-left
+    h2 id="firm-fullname"
+      span.edgar.firm 
+        = firm.name
+  .row.d-flex.justify-content-left
+    h5 id="accession-number"
+      span.edgar.firm 
+        = "Accession Number: #{filing.accession_number}"
+  .row.d-flex.justify-content-left
+    a.btn.btn-success href="#{filing.document_path}" target="_blank"
+      = "Click to see full document!"
+
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    .flex-fill.p-2.align-self-center
+      table.table id="firm-table"
+        thead
+        tbody
+          tr
+            th
+              span Firm
+            td
+              span
+                = firm.name
+          tr
+            th
+              span SIC
+            td
+              span
+                = firm.sic
+          tr
+            th
+              span SIC Description
+            td 
+              span 
+                = firm.sic_description
+          tr
+            th
+              span Tickers
+            td
+              - firm.tickers.split.each do |ticker|
+                = ticker
+          tr
+            th
+              span Average Readability Score
+            td 
+              span 
+                = firm.aver_firm_rdb
+          tr
+            th
+              span Average Sentiment Score
+            td 
+              span 
+                = firm.aver_firm_sentiment
+
+  
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    // rdb gauge
+    .flex-fill.p-5.align-self-center
+      ruby: 
+        rdbscore = filing.rdb_score
+        averfirmrdb = firm.aver_firm_rdb
+        difrdb = averfirmrdb - rdbscore
+        rdbdata = [rdbscore, difrdb]
+
+      canvas#rdb_gauge[]
+      script type="module"
+        | import drawGauge from "/assets/js/drawGauge.js"; 
+        | drawGauge('rdb_gauge',['Readability'], #{rdbdata}, ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']);
+        //  //, ['rgb(255, 205, 86)', 'rgba(255, 205, 86, 0.75)']
+
+    // sentiment gauge
+    .flex-fill.p-5.align-self-center
+      ruby: 
+        sentimentscore = filing.sentiment_score
+        averfirmsentiment = firm.aver_firm_sentiment
+        difsentiment = averfirmsentiment - sentimentscore
+        sentimentdata = [sentimentscore, difsentiment]
+
+      canvas#sentiment_gauge[]
+      script type="module"
+        | import drawGauge from "/assets/js/drawGauge.js"; 
+        | drawGauge('sentiment_gauge', ['Sentiment'], #{sentimentdata}, ['rgb(255, 192, 192)', 'rgb(255, 192, 192)']);
+        // , ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']
+
+  / Word Cloud
+  .container.top-buffer.justify-content-between
+    ruby:
+      require 'json'
+      words = filing.word_frequency.to_json
+
+    canvas#word_cloud[height="600", width="1100"]
+    javascript:
+      var words = #{words}
+      WordCloud(document.getElementById("word_cloud"), { list: words, backgroundColor: 'rgb(252, 186, 3, 0.2)'} );
+      
+/ .container.top-buffer
+/   iframe height="600" src="#{filing.document_path}" width="100%" 
+   / is="x-frame-bypass"

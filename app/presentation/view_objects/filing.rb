@@ -2,9 +2,10 @@
 
 module Views
   # View for a single filing entity
-  class Filling
-    def initialize(filing, index = nil)
+  class Filing
+    def initialize(filing, filing_textual_attribute, index = nil)
       @filing = filing
+      @filing_textual_attribute = filing_textual_attribute
       @index = index
     end
 
@@ -42,6 +43,25 @@ module Views
 
     def size
       @filing.size
+    end
+
+    def word_frequency
+      @filing_textual_attribute.word_frequency
+    end
+
+    def rdb_score
+      @filing_textual_attribute.filing_rdb
+    end
+    
+    def sentiment_score
+      @filing_textual_attribute.filing_sentiment
+    end
+
+    def document_path
+      accession_number = @filing.accession_number.tr('-', '')
+      cik = @filing.cik.to_i.to_s
+      path = "https://www.sec.gov/Archives/edgar/data"
+      "#{path}/#{cik}/#{accession_number}/#{@filing.primary_document}"
     end
   end
 end

@@ -3,6 +3,9 @@
 require 'figaro'
 require 'roda'
 require 'delegate' # needed until Rack 2.3 fixes delegateclass bug
+require 'slim'
+
+Slim::Engine.set_options use_html_safe: true, disable_escape: true
 
 module SECond
   # Environment-specific configuration

@@ -10,17 +10,17 @@
     .row.vertical-align.query-bar
       .col-md-2.col-sm-3
         .text-right Firm CIK:
-      .col-md-8.col-sm-6
+      .col-md-7.col-sm-5
         input { 
           type='text' name='firm_cik'
           id='firm-cik-input' class="form-control"
-          placeholder="e.g. 0000320193 or 320193"
+          placeholder="e.g. 0001326801 or 1326801"
         }
-      .col-md-2.col-sm-3
+      .col-md-3.col-sm-4
         button { 
           type='submit' id='cik-submit' class='submit' 
           value='submit' class="btn btn-success" 
-        } Show Firm's Filings
+        } Show Firm's Annual Filings
     .row
       .col-md-12.blank-row
   - if firms.any?

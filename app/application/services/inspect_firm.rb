@@ -25,15 +25,15 @@ module SECond
       def retrieve_firm_readability(input)
         input[:response] = Gateway::Api.new(SECond::App.config)
           .inspect(input[:requested])
-
         input[:response].success? ? Success(input) : Failure(input[:response].message)
-      rescue StandardError
+      rescue StandardError => error
+        puts error
         Failure('Cannot inspect firms right now; please try again later')
       end
 
       def reify_readability(input)
         unless input[:response].processing?
-          Representer::FirmReadability.new(OpenStruct.new)
+          Representer::FirmTextualAttribute.new(OpenStruct.new)
             .from_json(input[:response].payload)
             .then { input[:inspected] = _1 }
         end

@@ -51,10 +51,9 @@ module SECond
           call_api('post', ['firm', firm_cik])
         end
 
-        # def get_inspection(req)
-        #   call_api('get', ['firms',
-        #                    req.firm_cik, req.readability])
-        # end
+        def get_inspection(req)
+          call_api('get', ['firm', req])
+        end
 
         private
 
@@ -66,6 +65,7 @@ module SECond
         def call_api(method, resources = [], params = {})
           api_path = resources.empty? ? @api_host : @api_root
           url = [api_path, resources].flatten.join('/') + params_str(params)
+          puts url
           HTTP.headers('Accept' => 'application/json').send(method, url)
             .then { |http_response| Response.new(http_response) }
         rescue StandardError

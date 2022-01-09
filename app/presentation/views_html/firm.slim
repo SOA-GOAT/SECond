@@ -39,57 +39,177 @@
     h2 id="firm-fullname"
       span.edgar.firm 
         = firm.name
-  .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
-    table.table id="firm-table"
-      thead
-      tbody
-        tr
-          th
-            span Firm:
-          td
-            span
-              = firm.name
-        tr
-          th
-            span SIC:
-          td
-            span
-              = firm.sic
-        tr
-          th
-            span SIC Description:
-          td 
-            span 
-              = firm.sic_description
-        tr
-          th
-            span Tickers:
-          td
-            - firm.tickers.split.each do |ticker|
-              = ticker
-  .container.d-flex.flex-column.bg-light.rounded.custom-container-width.top-buffer
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    / Firm Basic Info Table
+    .flex-fill.p-2.align-self-center
+      table.table id="firm-table"
+        thead
+        tbody
+          tr
+            th
+              span Firm
+            td
+              span
+                = firm.name
+          tr
+            th
+              span SIC
+            td
+              span
+                = firm.sic
+          tr
+            th
+              span SIC Description
+            td 
+              span 
+                = firm.sic_description
+          tr
+            th
+              span Tickers
+            td
+              - firm.tickers.split.each do |ticker|
+                = ticker
+          tr
+            th
+              span Average Readability Score
+            td 
+              span 
+                = firm.aver_firm_rdb
+          tr
+            th
+              span Average Sentiment Score
+            td 
+              span 
+                = firm.aver_firm_sentiment
+
+    / Readability Trend
+    .flex-fill.p-6.align-self-center
+      ruby: 
+        require 'json'
+        filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+        filingdate = filingdate.reverse.to_json
+
+        sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+        sentimentscore = sentimentscore.reverse.to_json
+
+        rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+        rdbscore = rdbscore.reverse.to_json
+
+      .graph
+        canvas#sentiment_rdb_trend[]
+        script type="module"
+          | import drawMultiAxisLineChart from "/assets/js/drawMultiAxisLineChart.js"; 
+          | drawMultiAxisLineChart('sentiment_rdb_trend', #{filingdate}, [#{rdbscore}, #{sentimentscore}]);
+
+      / ruby: 
+      /   require 'json'
+      /   filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+      /   filingdate = filingdate.reverse.to_json
+
+      /   rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+      /   rdbscore = rdbscore.reverse.to_json
+
+      / .graph
+      /   canvas#rdb_trend[]
+      /   script type="module"
+      /     | import drawLineChart from "/assets/js/drawLineChart.js"; 
+      /     | drawLineChart('rdb_trend', #{filingdate}, #{rdbscore});
+
+
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.flex-md-column
+    / Size and Sentiment chart
+    .flex-fill.p-2.align-self-center
+      ruby: 
+        require 'json'
+        filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+        filingdate = filingdate.reverse.to_json
+
+        sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+        sentimentscore = sentimentscore.reverse.to_json
+
+        size = filing_list.map do |filing| filing.size.to_i end
+        size = size.reverse.to_json
+
+      .graph
+        canvas#sentiment_size_trend[]
+        script type="module"
+          | import drawMixSenBarLineChart from "/assets/js/drawMixSenBarLineChart.js"; 
+          | drawMixSenBarLineChart('sentiment_size_trend', #{filingdate}, [#{size}, #{sentimentscore}], ['Size', 'Sentiment Score']);
+      
+
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    / Rdb and Size chart
+    .flex-fill.p-2.align-self-center
+      ruby: 
+        require 'json'
+        filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+        filingdate = filingdate.reverse.to_json
+
+        sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+        sentimentscore = sentimentscore.reverse.to_json
+
+        size = filing_list.map do |filing| filing.size.to_i end
+        size = size.reverse.to_json
+
+        rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+        rdbscore = rdbscore.reverse.to_json
+
+      .graph
+        canvas#size_rdb_trend[]
+        script type="module"
+          | import drawMixRdbBarLineChart from "/assets/js/drawMixRdbBarLineChart.js"; 
+          | drawMixRdbBarLineChart('size_rdb_trend', #{filingdate}, [#{size}, #{rdbscore}], ['Size', 'Readability Score']);
+  
+  / .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+  /   / Rdb and Sentiment chart
+  /   .flex-fill.p-2.align-self-center
+  /     ruby: 
+  /       require 'json'
+  /       filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+  /       filingdate = filingdate.reverse.to_json
+
+  /       sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+  /       sentimentscore = sentimentscore.reverse.to_json
+
+  /       size = filing_list.map do |filing| filing.size.to_i end
+  /       size = size.reverse.to_json
+
+  /       rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+  /       rdbscore = rdbscore.reverse.to_json
+
+  /     .graph
+  /       canvas#sentiment_rdb_trend[]
+  /       script type="module"
+  /         | import drawMixRdbBarLineChart from "/assets/js/drawMixRdbBarLineChart.js"; 
+  /         | drawMixRdbBarLineChart('sentiment_rdb_trend', #{filingdate}, [#{sentimentscore}, #{rdbscore}], ['Sentiment Score', 'Readability Score']);
+
+            
+  / Filings table
+  .container.d-flex.flex-column.bg-light.rounded.top-buffer
     table.table id="filings-table"
       thead
         th.filing.att Accession Number
         th.filing.att Form Type
         th.filing.att Filing Date
-        th.filing.att Reporting Date
+        th.filing.att Primary Document
         th.filing.att Size
+        th.filing.att Readability
+        th.filing.att Sentiment
       tbody
-        - firm.filings.each do |filing, index|
+        - filing_list.each do |filing, index|
           tr
             td.filing.value
-              span #{filing.accession_number}
+              a href="/firm/#{firm.cik}/#{filing.accession_number}"
+                span #{filing.accession_number}
             td.filing.value
               span #{filing.form_type}
-            td.filing.value
+            td.filing.value id="filing-date"
               span #{filing.filing_date}
             td.filing.value
-              span #{filing.reporting_date}
-            / td.filing.value
-            /   span #{firm_rdb.aver_firm_readability}
+              span #{filing.primary_document}
             td.filing.value
               span #{filing.size}
-            / - filing.keys.each do |key|
-            /   td
-            /     span #{filing[key]}
+            td.filing.value id="rdb_score"
+              span #{filing.rdb_score}
+            td.filing.value
+              span #{filing.sentiment_score}
