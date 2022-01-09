@@ -54,7 +54,7 @@ module Views
     end
     
     def sentiment_score
-      @filing_textual_attribute.sentiment_score
+      @filing_textual_attribute.filing_sentiment
     end
 
     def document_path

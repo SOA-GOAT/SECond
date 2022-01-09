@@ -12,8 +12,8 @@ module SECond
       include Roar::JSON
 
       # property :sentences
-      property :filing_rdb # aver_firm_readability
-      property :sentiment_score # filing's sentiment score
+      property :filing_rdb
+      property :filing_sentiment
       property :word_frequency
     end
   end

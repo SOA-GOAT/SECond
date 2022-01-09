@@ -106,7 +106,7 @@
       require 'json'
       words = filing.word_frequency.to_json
 
-    canvas#word_cloud[width="100%"]
+    canvas#word_cloud[width="800"]
     javascript:
       var words = #{words}
       WordCloud(document.getElementById("word_cloud"), { list: words, backgroundColor: 'rgb(252, 186, 3, 0.2)'} );
