@@ -80,14 +80,8 @@ footer {
   color:rgb(100, 100, 100);
 }
 
-.half-left {
-  position: absolute;
-  left: 50%
-}
-
-.half-right {
-  position: absolute;
-  right: 50%
+.graph {
+  position: relative;
 }
 
 .word-cloud {
@@ -99,5 +93,5 @@ footer {
 }
 
 .full-graph {
-  
+
 }
