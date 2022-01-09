@@ -102,8 +102,8 @@
       canvas#rdb_gauge[]
       script type="module"
         | import drawGauge from "/assets/js/drawGauge.js"; 
-        | drawGauge('rdb_gauge', #{rdbdata});
-        // 'Readability' //, ['rgb(255, 205, 86)', 'rgba(255, 205, 86, 0.75)']
+        | drawGauge('rdb_gauge',['Readability'], #{rdbdata}, ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']);
+        //  //, ['rgb(255, 205, 86)', 'rgba(255, 205, 86, 0.75)']
 
     // sentiment gauge
     .flex-fill.p-5.align-self-center
@@ -116,8 +116,8 @@
       canvas#sentiment_gauge[]
       script type="module"
         | import drawGauge from "/assets/js/drawGauge.js"; 
-        | drawGauge('sentiment_gauge', #{sentimentdata});
-        // 'Sentiment', ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']
+        | drawGauge('sentiment_gauge', ['Sentiment'], #{sentimentdata}, ['rgb(255, 192, 192)', 'rgb(255, 192, 192)']);
+        // , ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']
 
   / Word Cloud
   .container.top-buffer.justify-content-between

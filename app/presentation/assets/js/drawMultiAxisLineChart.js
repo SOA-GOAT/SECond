@@ -6,7 +6,7 @@ export default function drawLineChart(id, my_labels, my_data) {
     datasets: [{
       label: 'Readability Score',
       data: my_data[0],
-      borderColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgb(75, 192, 192)', //green
       backgroundColor: "rgba(255, 205, 86, 0.75)",
       yAxisID: 'y',
       order: 1

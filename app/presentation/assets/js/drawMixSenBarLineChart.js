@@ -48,6 +48,7 @@ export default function drawMixSenBarLineChart(id, my_labels, my_data, my_ticks)
         y2: {
           type: 'linear',
           position: 'right',
+          reverse: true,
           grid: {
             drawOnChartArea: false // only want the grid lines for one axis to show up
           }
