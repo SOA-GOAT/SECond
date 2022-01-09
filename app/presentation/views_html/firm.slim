@@ -89,14 +89,31 @@
         filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
         filingdate = filingdate.reverse.to_json
 
+        sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+        sentimentscore = sentimentscore.reverse.to_json
+
         rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
         rdbscore = rdbscore.reverse.to_json
 
       .graph
-        canvas#rdb_trend[]
+        canvas#sentiment_rdb_trend[]
         script type="module"
-          | import drawLineChart from "/assets/js/drawLineChart.js"; 
-          | drawLineChart('rdb_trend', #{filingdate}, #{rdbscore});
+          | import drawMultiAxisLineChart from "/assets/js/drawMultiAxisLineChart.js"; 
+          | drawMultiAxisLineChart('sentiment_rdb_trend', #{filingdate}, [#{rdbscore}, #{sentimentscore}]);
+
+      / ruby: 
+      /   require 'json'
+      /   filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+      /   filingdate = filingdate.reverse.to_json
+
+      /   rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+      /   rdbscore = rdbscore.reverse.to_json
+
+      / .graph
+      /   canvas#rdb_trend[]
+      /   script type="module"
+      /     | import drawLineChart from "/assets/js/drawLineChart.js"; 
+      /     | drawLineChart('rdb_trend', #{filingdate}, #{rdbscore});
 
 
   .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.flex-md-column
@@ -116,11 +133,11 @@
       .graph
         canvas#sentiment_size_trend[]
         script type="module"
-          | import drawMixBarLineChart from "/assets/js/drawMixBarLineChart.js"; 
-          | drawMixBarLineChart('sentiment_size_trend', #{filingdate}, [#{size}, #{sentimentscore}], ['Size', 'Sentiment Score']);
+          | import drawMixSenBarLineChart from "/assets/js/drawMixSenBarLineChart.js"; 
+          | drawMixSenBarLineChart('sentiment_size_trend', #{filingdate}, [#{size}, #{sentimentscore}], ['Size', 'Sentiment Score']);
       
 
-    //.container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
     / Rdb and Size chart
     .flex-fill.p-2.align-self-center
       ruby: 
@@ -140,31 +157,31 @@
       .graph
         canvas#size_rdb_trend[]
         script type="module"
-          | import drawMixBarLineChart from "/assets/js/drawMixBarLineChart.js"; 
-          | drawMixBarLineChart('size_rdb_trend', #{filingdate}, [#{size}, #{rdbscore}], ['Size', 'Readability Score']);
+          | import drawMixRdbBarLineChart from "/assets/js/drawMixRdbBarLineChart.js"; 
+          | drawMixRdbBarLineChart('size_rdb_trend', #{filingdate}, [#{size}, #{rdbscore}], ['Size', 'Readability Score']);
   
-  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
-    / Rdb and Sentiment chart
-    .flex-fill.p-2.align-self-center
-      ruby: 
-        require 'json'
-        filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
-        filingdate = filingdate.reverse.to_json
+  / .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+  /   / Rdb and Sentiment chart
+  /   .flex-fill.p-2.align-self-center
+  /     ruby: 
+  /       require 'json'
+  /       filingdate = filing_list.map do |filing| filing.filing_date.split('-')[0].to_i end
+  /       filingdate = filingdate.reverse.to_json
 
-        sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
-        sentimentscore = sentimentscore.reverse.to_json
+  /       sentimentscore = filing_list.map do |filing| filing.sentiment_score.to_i end
+  /       sentimentscore = sentimentscore.reverse.to_json
 
-        size = filing_list.map do |filing| filing.size.to_i end
-        size = size.reverse.to_json
+  /       size = filing_list.map do |filing| filing.size.to_i end
+  /       size = size.reverse.to_json
 
-        rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
-        rdbscore = rdbscore.reverse.to_json
+  /       rdbscore = filing_list.map do |filing| filing.rdb_score.to_i end
+  /       rdbscore = rdbscore.reverse.to_json
 
-      .graph
-        canvas#sentiment_rdb_trend[]
-        script type="module"
-          | import drawMixBarLineChart from "/assets/js/drawMixBarLineChart.js"; 
-          | drawMixBarLineChart('sentiment_rdb_trend', #{filingdate}, [#{sentimentscore}, #{rdbscore}], ['Sentiment Score', 'Readability Score']);
+  /     .graph
+  /       canvas#sentiment_rdb_trend[]
+  /       script type="module"
+  /         | import drawMixRdbBarLineChart from "/assets/js/drawMixRdbBarLineChart.js"; 
+  /         | drawMixRdbBarLineChart('sentiment_rdb_trend', #{filingdate}, [#{sentimentscore}, #{rdbscore}], ['Sentiment Score', 'Readability Score']);
 
             
   / Filings table

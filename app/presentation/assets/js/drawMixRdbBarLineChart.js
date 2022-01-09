@@ -1,4 +1,4 @@
-export default function drawMixBarLineChart(id, my_labels, my_data, my_ticks) {
+export default function drawMixRdbBarLineChart(id, my_labels, my_data, my_ticks) {
   const ctx = document.getElementById(id);
 
   const labels = my_labels;

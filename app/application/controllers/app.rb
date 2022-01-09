@@ -16,7 +16,7 @@ module SECond
     # plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css', js: ['drawLineChart.js','drawGauge.js','drawMixBarLineChart.js']
+                    css: 'style.css', js: ['drawLineChart.js','drawGauge.js','drawMixRdbBarLineChart.js', 'drawMultiAxisLineChart.js', 'drawMixSenBarLineChart.js']
 
     use Rack::MethodOverride # for other HTTP verbs (with plugin all_verbs)
 
