@@ -40,6 +40,7 @@
       span.edgar.firm 
         = firm.name
   .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    / Firm Basic Info Table
     .flex-fill.p-2.align-self-center
       table.table id="firm-table"
         thead
@@ -81,6 +82,7 @@
               span 
                 = firm.aver_firm_sentiment
 
+    / Readability Trend
     .flex-fill.p-6.align-self-center
       ruby: 
         require 'json'
@@ -92,36 +94,16 @@
 
       .rdb-trend
         canvas#rdb_trend[]
-        javascript:
-          const ctx = document.getElementById('rdb_trend');
-          const labels = #{filingdate};
-          const data = {
-            labels: labels,
-            datasets: [{
-              label: 'Readability Trend',
-              data: #{rdbscore},
-              fill: false,
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1
-              }]
-          };
-          const config = {
-            type: 'line',
-            data: data,
-            options: {
-              animations: {
-                tension: {
-                  duration: 2000,
-                  easing: 'linear',
-                  from: 0.4,
-                  to: 0,
-                  loop: true
-                }
-              }
-            }
-          };
-          const myChart = new Chart(ctx, config)
+        script type="module"
+          | import drawLineChart from "/assets/js/drawLineChart.js"; 
+          | drawLineChart('rdb_trend', #{filingdate}, #{rdbscore});
 
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    / Mix chart
+    .flex-fill.p-2.align-self-center
+      
+
+  / Filings table
   .container.d-flex.flex-column.bg-light.rounded.top-buffer
     table.table id="filings-table"
       thead

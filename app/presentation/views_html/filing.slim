@@ -47,43 +47,66 @@
     a.btn.btn-success href="#{filing.document_path}" target="_blank"
       = "Click to see full document!"
 
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    .flex-fill.p-2.align-self-center
+      table.table id="firm-table"
+        thead
+        tbody
+          tr
+            th
+              span Firm
+            td
+              span
+                = firm.name
+          tr
+            th
+              span SIC
+            td
+              span
+                = firm.sic
+          tr
+            th
+              span SIC Description
+            td 
+              span 
+                = firm.sic_description
+          tr
+            th
+              span Tickers
+            td
+              - firm.tickers.split.each do |ticker|
+                = ticker
+          tr
+            th
+              span Average Readability Score
+            td 
+              span 
+                = firm.aver_firm_rdb
+          tr
+            th
+              span Average Sentiment Score
+            td 
+              span 
+                = firm.aver_firm_sentiment
+
   .container
     ruby: 
       rdbscore = filing.rdb_score
       averfirmrdb = firm.aver_firm_rdb
       difrdb = averfirmrdb - rdbscore
+      rdbdata = [rdbscore, difrdb]
 
     canvas#rdb_gauge[]
-    javascript:
-      var ctx = document.getElementById("rdb_gauge");
-      var myChart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels: ["Readability"],
-          datasets: [
-            {
-              label: ["# of Votes"],
-              data: [#{rdbscore}, #{difrdb}],
-              backgroundColor: ["rgb(255, 205, 86)", 'rgba(255, 255, 255, 0.85)'],
-              borderColor: ["rgba(255, 205, 86, 0.75)"],
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          maintainAspectRatio: false,
-          circumference: 180,
-          rotation:-90,
-          cutoutPercentage: 64,
-        }
-      });
+    script type="module"
+      | import drawGauge from "/assets/js/drawGauge.js"; 
+      | drawGauge('rdb_gauge', #{rdbdata});
 
   .container.top-buffer.word-cloud
     ruby:
       require 'json'
       words = filing.word_frequency.to_json
 
-    canvas#word_cloud[height="600" width="1000"]
+    canvas#word_cloud[]
     javascript:
       var words = #{words}
       console.log(words)

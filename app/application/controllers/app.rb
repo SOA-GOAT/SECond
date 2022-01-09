@@ -13,10 +13,10 @@ module SECond
     plugin :halt
     plugin :flash
     plugin :all_verbs # allows DELETE and other HTTP verbs beyond GET/POST
-    plugin :caching
+    # plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css' # , js: 'table_row.js'
+                    css: 'style.css', js: ['drawLineChart.js','drawGauge.js','drawMixBarLineChart.js']
 
     use Rack::MethodOverride # for other HTTP verbs (with plugin all_verbs)
 
