@@ -80,10 +80,24 @@ footer {
   color:rgb(100, 100, 100);
 }
 
-.rdb-trend {
-  position: relative;
+.half-left {
+  position: absolute;
+  left: 50%
+}
+
+.half-right {
+  position: absolute;
+  right: 50%
 }
 
 .word-cloud {
   min-width: 100%; 
+}
+
+.half {
+  width: 50%;
+}
+
+.full-graph {
+  
 }

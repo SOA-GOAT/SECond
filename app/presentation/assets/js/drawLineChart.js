@@ -19,7 +19,7 @@ export default function drawLineChart(id, my_labels, my_data) {
         tension: {
           duration: 2500,
           easing: 'linear',
-          from: 0.4,
+          from: 0.5,
           to: 0,
           loop: true
         }

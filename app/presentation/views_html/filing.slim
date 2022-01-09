@@ -89,24 +89,43 @@
               span 
                 = firm.aver_firm_sentiment
 
-  .container
-    ruby: 
-      rdbscore = filing.rdb_score
-      averfirmrdb = firm.aver_firm_rdb
-      difrdb = averfirmrdb - rdbscore
-      rdbdata = [rdbscore, difrdb]
+  
+  .container.d-flex.flex-lg-row.justify-content-between.rounded.top-buffer.align-content-around.align-items-stretch.flex-md-column
+    // rdb gauge
+    .flex-fill.p-5.align-self-center
+      ruby: 
+        rdbscore = filing.rdb_score
+        averfirmrdb = firm.aver_firm_rdb
+        difrdb = averfirmrdb - rdbscore
+        rdbdata = [rdbscore, difrdb]
 
-    canvas#rdb_gauge[]
-    script type="module"
-      | import drawGauge from "/assets/js/drawGauge.js"; 
-      | drawGauge('rdb_gauge', #{rdbdata});
+      canvas#rdb_gauge[]
+      script type="module"
+        | import drawGauge from "/assets/js/drawGauge.js"; 
+        | drawGauge('rdb_gauge', #{rdbdata});
+        // 'Readability' //, ['rgb(255, 205, 86)', 'rgba(255, 205, 86, 0.75)']
 
-  .container.top-buffer
+    // sentiment gauge
+    .flex-fill.p-5.align-self-center
+      ruby: 
+        sentimentscore = filing.sentiment_score
+        averfirmsentiment = firm.aver_firm_sentiment
+        difsentiment = averfirmsentiment - sentimentscore
+        sentimentdata = [sentimentscore, difsentiment]
+
+      canvas#sentiment_gauge[]
+      script type="module"
+        | import drawGauge from "/assets/js/drawGauge.js"; 
+        | drawGauge('sentiment_gauge', #{sentimentdata});
+        // 'Sentiment', ['rgb(75, 192, 192)', 'rgba(75, 192, 192, 0.75)']
+
+  / Word Cloud
+  .container.top-buffer.justify-content-between
     ruby:
       require 'json'
       words = filing.word_frequency.to_json
 
-    canvas#word_cloud[width="800"]
+    canvas#word_cloud[height="600", width="1100"]
     javascript:
       var words = #{words}
       WordCloud(document.getElementById("word_cloud"), { list: words, backgroundColor: 'rgb(252, 186, 3, 0.2)'} );
