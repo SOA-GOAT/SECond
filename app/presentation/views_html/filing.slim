@@ -101,15 +101,14 @@
       | import drawGauge from "/assets/js/drawGauge.js"; 
       | drawGauge('rdb_gauge', #{rdbdata});
 
-  .container.top-buffer.word-cloud
+  .container.top-buffer
     ruby:
       require 'json'
       words = filing.word_frequency.to_json
 
-    canvas#word_cloud[]
+    canvas#word_cloud[width="100%"]
     javascript:
       var words = #{words}
-      console.log(words)
       WordCloud(document.getElementById("word_cloud"), { list: words, backgroundColor: 'rgb(252, 186, 3, 0.2)'} );
       
 / .container.top-buffer
