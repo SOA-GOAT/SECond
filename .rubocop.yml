@@ -26,6 +26,11 @@ Metrics/MethodLength:
   Exclude:
     - app/domain/firms/repositories/filings.rb # Rebuild filing entity requires large blocks
 
+Metrics/ClassLength:
+  Enabled: true
+  Exclude:
+    - app/application/controllers/app.rb
+
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented

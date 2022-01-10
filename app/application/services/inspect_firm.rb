@@ -26,8 +26,8 @@ module SECond
         input[:response] = Gateway::Api.new(SECond::App.config)
           .inspect(input[:requested])
         input[:response].success? ? Success(input) : Failure(input[:response].message)
-      rescue StandardError => error
-        puts error
+      rescue StandardError => e
+        puts e
         Failure('Cannot inspect firms right now; please try again later')
       end
 

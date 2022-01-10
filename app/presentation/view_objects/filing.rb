@@ -52,7 +52,7 @@ module Views
     def rdb_score
       @filing_textual_attribute.filing_rdb
     end
-    
+
     def sentiment_score
       @filing_textual_attribute.filing_sentiment
     end
@@ -60,7 +60,7 @@ module Views
     def document_path
       accession_number = @filing.accession_number.tr('-', '')
       cik = @filing.cik.to_i.to_s
-      path = "https://www.sec.gov/Archives/edgar/data"
+      path = 'https://www.sec.gov/Archives/edgar/data'
       "#{path}/#{cik}/#{accession_number}/#{@filing.primary_document}"
     end
   end

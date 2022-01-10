@@ -8,7 +8,6 @@ module Views
     def initialize(filings, firm_textual_attribute)
       filings_textual_attribute = firm_textual_attribute.filings_textual_attribute
       @filings = filings.map.with_index { |filing, index| Filing.new(filing, filings_textual_attribute[index], index) }
-      
     end
 
     def each

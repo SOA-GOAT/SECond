@@ -16,7 +16,9 @@ module SECond
     # plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css', js: ['drawLineChart.js','drawGauge.js','drawMixRdbBarLineChart.js', 'drawMultiAxisLineChart.js', 'drawMixSenBarLineChart.js']
+                    css: 'style.css',
+                    js: ['drawLineChart.js', 'drawGauge.js', 'drawMixRdbBarLineChart.js',
+                         'drawMultiAxisLineChart.js', 'drawMixSenBarLineChart.js']
 
     use Rack::MethodOverride # for other HTTP verbs (with plugin all_verbs)
 
@@ -65,7 +67,7 @@ module SECond
 
         routing.on String, String do |firm_cik, accession_number|
           # GET /firm/{firm_cik}/{accession_number}
-          puts "we got here"
+          puts 'we got here'
           routing.get do
             session[:watching] ||= []
 
@@ -89,9 +91,10 @@ module SECond
               firm = firm_list.first
 
               filing_list = Views::FilingsList.new(firm.filings, inspected)
+
               firm = Views::Firm.new(firm, inspected)
-              
-              filing = filing_list.filter{ |filing| filing.accession_number == accession_number}.first
+
+              filing = filing_list.filter { |my_filing| my_filing.accession_number == accession_number }.first
 
               response.expires(60, public: true) if App.environment == :production
             end
